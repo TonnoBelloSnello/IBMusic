@@ -1,0 +1,395 @@
+{%extends "layout.html" %}
+{%block title%} Home {% endblock %}
+{%block content %}
+
+<div class="flex flex-col w-screen h-screen bg-[#121212]">
+    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+        <div class="container flex flex-wrap items-center justify-between mx-auto">
+            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">IBM-5100</span>
+        </div>
+    </nav>
+    <div id="body">
+        <div class="flex flex-row-reverse flex-wrap w-full bg-gradient-to-r from-[#121213] to-blue-900 h-[10rem] rounded text-white text-2xl font-bold">
+            <div class="md:pr-[5rem] items-center flex h-full flex-row-reverse flex-wrap gap-4">
+                <div class="h-[5rem] w-[5rem] bg-blue-600 flex justify-center items-center rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-music-note-list text-white" viewBox="0 0 16 16">
+                        <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"></path>
+                        <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"></path>
+                        <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"></path>
+                        <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"></path>
+                      </svg>
+                </div>
+                CURRENT QUEUE
+            </div>
+        </div>
+        <div class="container mx-auto mt-2 overflow-y-auto overflow-x-hidden" id="scroll-table">
+            <div class="w-full flex flex-col text-white">
+                <div class="w-full flex justify-between">
+                    <table class="table-fixed w-full">
+                        <thead class="sticky top-0 bg-[#121212]">
+                            <tr class="text-gray-500 text-left">
+                                <th class="w-[2rem]">#</th>
+                                <th>Name</th>
+                                <th>Author</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody class="animate-pulse" id="old-queue">
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[20%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[15%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[20%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[15%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[20%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[15%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[20%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[15%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[20%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[15%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                            <tr class="rounded hover:bg-[#2e3236] h-[3rem]">
+                                <td><div class="w-[50%] bg-slate-700 h-1"></div></td>
+                                <td><div class="w-2/3 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-1/2 bg-slate-700 h-1"></div></td>
+                                <td><div class="w-[25%] bg-slate-700 h-1"></div></td>
+                            </tr>
+                        </tbody>
+
+                        <tbody id="queue" class="hidden"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w-full bg-[#181818] flex-wrap fixed bottom-0 h-auto pt-[0.2rem] flex justify-around flex-row items-center text-white" id="footer">
+        <img src="{{url_for('static', filename='empty.png')}}" alt="" id="cover" class="h-[80px] w-[80px]"/>
+        <div class="container w-[85%] lg:mx-auto flex justify-between items-center">
+            <div class="flex flex-col gap-2 w-[10rem] animate-pulse rounded" id="old-current-song">
+                <div class="max-w-[100%] bg-slate-700 w-1/2 h-2 truncate rounded"></div>
+                <div class="text-[#959595] bg-slate-700 w-[15%] h-2 text-sm rounded"></div>
+            </div>
+            <div class="flex flex-col w-[10rem] hidden" id="current-song">
+                <p id="songName" class="max-w-[100%] truncate">---</p>
+                <p class="text-[#959595] text-sm" id="author">---</p>
+            </div>
+
+            <div class="flex min-w-[30%] max-w-[30%] h-full items-center">
+                <div class="flex flex-col gap-3 items-center w-full">
+                    <div class="flex justify-center">
+                        <div class="w-[35px] h-[35px] flex items-center justify-center rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-gray-700 cursor-not-allowed" viewBox="0 0 16 16">
+                            <path d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.54-.313 1.232.066 1.232.696v7.384c0 .63-.692 1.01-1.232.697L5 8.753V12a.5.5 0 0 1-1 0V4z"></path>
+                            </svg>
+                        </div>
+                        <div class="w-[35px] h-[35px] flex items-center justify-center rounded-full bg-white play-animation" id="pause" value="play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-play-fill text-black" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
+                            </svg>
+                        </div>
+                        <div class="w-[35px] h-[35px] flex items-center justify-center rounded-full" id="skip">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-[#bababa] hover:text-white"  viewBox="0 0 16 16">
+                            <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.693 3.3 4 3.678 4 4.308v7.384c0 .63.692 1.01 1.233.697L11.5 8.753V12a.5.5 0 0 0 1 0V4z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-[30rem] max-w-full flex items-center justify-center gap-3">
+                        <div class="h-full flex items-center">
+                            <span class="text-[#a2a7a7]" id="currentTime">00:00</span>
+                        </div>
+                        <div class="w-[90%]">
+                            <div id="time" class="w-[100%] bg-white h-1 rounded-lg"></div>
+                        </div>
+                        <div class="h-full flex items-center">
+                            <span class="text-[#a2a7a7]" id="maxTime">00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row-reverse w-[10rem]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.624 9.624 0 0 0 7.556 8a9.624 9.624 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.595 10.595 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.624 9.624 0 0 0 6.444 8a9.624 9.624 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5z"></path>
+                <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z"></path>
+                </svg>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock %}
+
+{%block scripts %}
+<script src="{{ url_for('static', filename='functions.js') }}"></script>
+<script type="module">
+    const reSizeTable = () => {
+        const scroll_table = document.getElementById('scroll-table');
+        const footer = document.getElementById('footer');
+        const scroll_table_y = scroll_table.getBoundingClientRect().y;
+        const footer_y = footer.getBoundingClientRect().y;
+        scroll_table.style.height = `${footer_y - scroll_table_y}px`;
+    }
+
+
+    import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+
+    reSizeTable();
+
+    window.addEventListener('resize', reSizeTable);
+
+    const user_code = '{{ user_code }}';
+    const guild_id = '{{ guild_id }}';
+    const socket = io();
+    const pause = document.getElementById('pause');
+    let index = 1;
+
+    
+    socket.on('error', () => window.location.href = "/");
+    socket.emit('connectBotQueue', {user_code, guild_id});
+
+    let current_song;
+
+    socket.on('connectBot', (data) => {
+        current_song = data.queue[0];
+
+        setQueue(data.queue);
+        document.getElementById('queue').classList.remove('hidden');
+        document.getElementById('old-queue').classList.add('hidden');
+
+        if(current_song !== undefined) setSong(current_song);
+
+        socket.on('getTime', (currentTime) => {
+            pause.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-pause-fill text-black" viewBox="0 0 16 16">
+                <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+              </svg>`;
+            document.getElementById('time').style.width = (currentTime.time / current_song.duration) * 100 + "%";
+            document.getElementById('currentTime').innerHTML = convertTime(currentTime.time);
+        });
+
+        socket.on('songStop', () => {
+            document.getElementById('old-current-song').classList.remove('hidden');
+            document.getElementById('current-song').classList.add('hidden');
+            socket.emit('getQueue', {user_code, guild_id});
+            document.getElementById('cover').src = "{{url_for('static', filename='empty.png')}}";
+        });
+    
+        socket.on('songStart', (data) => {
+            current_song = data.queue[0];
+            setSong(current_song);
+            setQueue(data.queue);
+            document.getElementById('old-current-song').classList.add('hidden');
+            document.getElementById('current-song').classList.remove('hidden');
+        });    
+
+        socket.on('getQueue', (data) => {
+            setQueue(data.queue);
+            current_song = data.queue[0];
+            setSong(current_song);
+        });
+
+        document.getElementById('skip').addEventListener('click', () => {
+            socket.emit('skip', {user_code, guild_id});
+        });
+
+        pause.addEventListener('click', () => {
+            if(pause.getAttribute('value') === "play")
+                socket.emit('pause', {user_code, guild_id});
+            else
+                socket.emit('resume', {user_code, guild_id});
+        });
+
+        socket.on('resume', () => {
+            pause.setAttribute('value', 'play');
+
+            document.getElementById('currentSongPause').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+                <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+              </svg>`
+
+
+            pause.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-pause-fill text-black" viewBox="0 0 16 16">
+                <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+              </svg>`;
+        });
+
+        socket.on('pause', () => {
+            pause.setAttribute('value', 'pause');
+            document.getElementById('currentSongPause').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>`;
+            
+            pause.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-play-fill text-black" viewBox="0 0 16 16">
+                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+            </svg>`;
+        });
+    });
+
+    const setQueue = (queue) => {
+        while (document.getElementById('queue').firstChild) {
+            document.getElementById('queue').removeChild(document.getElementById('queue').firstChild);
+        }
+        let index = 1;
+
+        queue.forEach(song => {
+            if(index !== 1) document.getElementById('queue').appendChild(createQueue(song, index));
+            else document.getElementById('queue').appendChild(createCurrentSong(song, index));
+            index++;
+        })
+
+        document.getElementById('queue').classList.remove('hidden');
+        document.getElementById('old-queue').classList.add('hidden');
+    }
+    const setSong = (song) => {
+        document.getElementById('songName').innerHTML = song.title;
+        document.getElementById('author').innerHTML = song.author;
+        document.getElementById('maxTime').innerHTML = convertTime(song.duration);
+        document.getElementById('cover').src = song.cover;
+
+        document.getElementById('old-current-song').classList.add('hidden');
+        document.getElementById('current-song').classList.remove('hidden');
+    }
+    const createCurrentSong = (song) => {
+        let tr = document.createElement('tr');
+        tr.classList.add('rounded');
+        tr.classList.add('hover:bg-[#2e3236]');
+        tr.classList.add('h-[3rem]');
+
+        let td0 = document.createElement('td');
+        td0.classList.add('pr-[2rem]');
+        td0.classList.add('text-lg')
+        td0.classList.add('font-bold')
+        td0.classList.add('text-gray-500')
+        td0.setAttribute('value', 'play');
+        td0.setAttribute('id', 'currentSongPause');
+        td0.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+            <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+          </svg>`;
+        td0.addEventListener('click', () => {
+            if(td0.getAttribute('value') === "play"){
+                socket.emit('pause', {user_code, guild_id});
+                td0.setAttribute('value', 'pause');
+            }
+            else{
+                socket.emit('resume', {user_code, guild_id});
+                td0.setAttribute('value', 'play');
+            }
+        });
+        tr.appendChild(td0);
+
+        let td1 = document.createElement('td');
+        td1.classList.add('truncate');
+        td1.classList.add('pr-[1rem]');
+        td1.classList.add('text-[#1fbc57]');
+        td1.innerHTML = song.title;
+        tr.appendChild(td1);
+
+        let td2 = document.createElement('td');
+        td2.innerHTML = song.author;
+        tr.appendChild(td2);
+
+        let td3 = document.createElement('td');
+        td3.innerHTML = convertTime(song.duration);
+        tr.appendChild(td3);
+
+        return tr;
+    }
+    const createQueue = (song, index) => {
+        let tr = document.createElement('tr');
+        tr.classList.add('rounded');
+        tr.classList.add('hover:bg-[#2e3236]');
+        tr.classList.add('h-[3rem]');
+
+        tr.addEventListener('mouseenter', () => {
+            td0.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill text-gray-500" viewBox="0 0 16 16">
+                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+            </svg>`;
+            td0.addEventListener('click', () => {
+                socket.emit('play', {user_code, guild_id, index: index - 1});
+            });
+        });
+
+        let td0 = document.createElement('td');
+        td0.classList.add('pr-[2rem]');
+        td0.classList.add('text-lg')
+        td0.classList.add('font-bold')
+        td0.classList.add('text-gray-500')
+        td0.innerHTML = index;
+        tr.appendChild(td0);
+        tr.addEventListener('mouseleave', () => {
+            td0.innerHTML = index;
+            td0.removeEventListener('click', () => {});
+        })
+
+        let td1 = document.createElement('td');
+        td1.classList.add('truncate');
+        td1.classList.add('pr-[1rem]')
+        td1.innerHTML = song.title;
+        tr.appendChild(td1);
+
+        let td2 = document.createElement('td');
+        td2.innerHTML = song.author;
+        tr.appendChild(td2);
+
+        let td3 = document.createElement('td');
+        td3.innerHTML = convertTime(song.duration);
+        tr.appendChild(td3);
+
+        return tr;
+    }
+    const convertTime = (time) => {
+        let minutes = Math.floor(time / 60);
+        let seconds = Math.floor(time - minutes * 60);
+        if (seconds < 10) seconds = "0" + seconds;
+        if (minutes < 10) minutes = "0" + minutes;
+
+        return minutes + ":" + seconds;
+    }
+</script>
+{% endblock %}

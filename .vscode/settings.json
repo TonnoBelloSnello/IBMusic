@@ -1,0 +1,25 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.package.json": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/node_modules": true,
+        "**/.eslint*": true,
+        "**/__pycache__": true,
+        "**/.svelte-kit": true,
+        "**/.prettier*": true,
+        "**/venv": true,
+        "**/application.yml": true,
+        "**/Lavalink.jar": true,
+        "**/.npmrc": true,
+        "**/.gitignore": true,
+    }
+}
