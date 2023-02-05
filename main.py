@@ -48,4 +48,4 @@ def oauth_callback():
 if __name__ == '__main__':
     discord = Thread(target=start, daemon=True)
     discord.start()
-    socket.run(app)
+    socket.run(app, allow_unsafe_werkzeug=True)
