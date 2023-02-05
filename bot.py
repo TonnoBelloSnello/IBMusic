@@ -1,13 +1,14 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+import asyncio
 import nextcord
 from nextcord.ext import commands
 import os
 
 from cogs import music, ibm_site, node_listener
 from server import srv
-
+from threading import Thread
 cogs = [music, ibm_site, node_listener]
 
 intents = nextcord.Intents().all()
@@ -39,7 +40,9 @@ async def on_ready():
 
 def start():
     token = os.getenv("BOT_TOKEN")
-    bot.run(token)
+    loop = asyncio.get_event_loop()
+    loop.create_task(bot.start(token))
+    Thread(target=loop.run_forever, daemon=True).start()
 
 
 if __name__ == '__main__':
