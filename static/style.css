@@ -29,3 +29,32 @@
 ::-webkit-scrollbar-thumb:hover {
 	background: #7b7b7b;
 }
+
+@keyframes top-down {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes down-top {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.down-top {
+    animation: top-down 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
+.top-down {
+    animation: top-down 0.5s;
+    animation-fill-mode: forwards;
+}

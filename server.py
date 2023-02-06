@@ -1,6 +1,6 @@
 import asyncio
 import secrets
-
+import random
 import wavelink
 from flask import Flask, session
 from flask_cors import CORS
@@ -118,8 +118,10 @@ class SocketNamespace(Namespace):
         if srv.get(guild_id) is None:
             return
         if logged_users.get(data.get('user_code')) == guild_id and not srv[guild_id]['skipping']:
+
             player: wavelink.Player = srv.get(guild_id).get('player')
             index: int = data.get('index')
+            srv.get(guild_id)['time_loop'] = False
             if index > len(srv.get(guild_id).get('queue')) - 1:
                 return
 
@@ -128,7 +130,7 @@ class SocketNamespace(Namespace):
                 srv.get(guild_id).get('queue').pop(0)
 
             asyncio.run(player.stop())
-
+            srv.get(guild_id)['time'] = 0
             if srv.get(guild_id).get('pause'):
                 srv[str(guild_id)]['pause'] = False
 
@@ -142,5 +144,27 @@ class SocketNamespace(Namespace):
             srv[guild_id]['skipping'] = False
             socket.emit('getQueue', {'queue': output}, room=int(guild_id))
 
+    def on_shuffle(self, data):
+        if data.get('user_code') is None:
+            return
+        guild_id = data.get('guild_id')
+        if srv.get(guild_id) is None:
+            return
 
+        if logged_users.get(data.get('user_code')) == guild_id:
+            queue = srv.get(guild_id).get('queue')
+            first_element = queue[0]
+            queue.pop(0)
+            random.shuffle(queue)
+
+            queue.insert(0, first_element)
+            srv.get(guild_id)['queue'] = queue
+            output = [{
+                "title": song.title,
+                "cover": get_cover(song.uri),
+                "duration": song.duration,
+                'author': song.author,
+            } for song in queue]
+            emit('shuffle', {'status': 'success', 'guild_id': guild_id}, room=int(guild_id))
+            emit('getQueue', {'queue': output}, room=int(guild_id))
 socket.on_namespace(SocketNamespace(''))
