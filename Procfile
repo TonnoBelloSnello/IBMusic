@@ -1,1 +1,1 @@
-worker: chmod 777 ./start.sh & ./start.sh
+worker: java -jar Lavalink.jar & python main.py
