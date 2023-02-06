@@ -7,6 +7,17 @@ jobs:
     steps:
       # This step checks out a copy of your repository.
       - uses: actions/checkout@v2
+      - name: Build app with pack CLI & publish to GitHub Container Registry
+        run: |
+          pack build ghcr.io/jonashackt/spring-boot-flyio:latest \
+              --builder paketobuildpacks/builder:tiny \
+              --buildpack paketo-buildpacks/java-native-image@5.12.0 \
+              --path . \
+              --env "BP_JVM_VERSION=17" \
+              --env "BP_NATIVE_IMAGE=true" \
+              --cache-image ghcr.io/jonashackt/spring-boot-flyio-paketo-cache-image:latest \
+              --publish
+
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
