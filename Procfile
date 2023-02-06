@@ -1,2 +1,1 @@
-preworker: python install_jdk.py
-worker: java -jar Lavalink.jar & python main.py
+worker: chmod 777 start.sh & start.sh
