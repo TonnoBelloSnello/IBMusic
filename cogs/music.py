@@ -31,7 +31,7 @@ async def send_message(ctx: Context):
         color=nextcord.Color.green()
     )
     try:
-        em.set_thumbnail(url=srv[str(ctx.guild.id)]['queue'][0].thumbnail)
+        em.set_thumbnail(url=get_cover(url=srv[str(ctx.guild.id)]['queue'][0].uri))
     except AttributeError:
         pass
     srv[str(ctx.guild.id)]["last_message"] = await ctx.send(embed=em)
@@ -284,7 +284,7 @@ class music(commands.Cog):
             if result is not None:
                 thumbnail = get_cover(result.uri)
                 em.description = f"**{result.title}** \n" \
-                                 f"Duation: **{convert(result.duration)}**\n" \
+                                 f"Duration: **{convert(result.duration)}**\n" \
                                  f"Published by: **{result.author}**\n" \
                                  f"Url: {result.uri}"
                 em.set_image(url=thumbnail)

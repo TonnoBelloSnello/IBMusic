@@ -3,7 +3,7 @@ import wavelink
 from cogs.site.discord_utils import User
 
 
-def get_cover(url) -> str:
+def get_cover(url: str) -> str:
     import re
     if len(url) > 0:
         exp = r"^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*"

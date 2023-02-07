@@ -42,6 +42,7 @@ class NodeListener(commands.Cog):
     async def on_track_end(self, player: wavelink.Player, track: wavelink.Track, reason):
         print(f"{player.guild.id} has finished the track: {track.title} for the reason: {reason}")
         srv[str(player.guild.id)]['time_loop'] = False
+        srv[str(player.guild.id)]['time'] = 0
         socket.emit("songStop", {"guild_id": player.guild.id}, room=player.guild.id)
 
         if reason == "LOAD_FAILED":
