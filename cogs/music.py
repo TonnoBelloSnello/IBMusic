@@ -298,7 +298,7 @@ class music(commands.Cog):
                 color=nextcord.Color.green()
             )
             em.description = f"**{player.track.title}** \n " \
-                             f"Duation: **{convert(player.track.duration)}**\n" \
+                             f"Duration: **{convert(player.track.duration)}**\n" \
                              f"Published by: **{player.track.author}**\n" \
                              f"Url: {player.track.uri}"
             em.set_image(url=get_cover(player.track.uri))
