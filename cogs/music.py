@@ -125,13 +125,22 @@ class music(commands.Cog):
                 query += "".join(args)
                 tracks = await node.get_tracks(query=query, cls=wavelink.YouTubeTrack)
                 queue.append(tracks[0])
-
-            output = [{
-                "title": song.title,
-                "cover": get_cover(song.uri),
-                "duration": song.duration,
-                'author': song.author,
-            } for song in queue]
+            output = [{}]
+            for song in queue:
+                try:
+                    output.append({
+                        "title": song.title,
+                        "duration": song.duration,
+                        "url": song.uri,
+                        "cover": get_cover(url=song.uri),
+                    })
+                except AttributeError:
+                    output.append({
+                        "title": song.title,
+                        "duration": "0",
+                        "url": None,
+                        "cover": None
+                    })
 
             if not ctx.voice_client.is_playing():
                 await send_message(ctx)
@@ -161,32 +170,50 @@ class music(commands.Cog):
 
     @commands.command(name="queue", aliases=["q"])
     async def queue_command(self, ctx: Context, *, args: typing.Optional[int]):
-        desctiption = str()
+        description = str()
         queue = srv[str(ctx.guild.id)]['queue']
-        adder = 0
-        index = 0
-        if args is not None:
-            index = 15 + args
-            adder = 15 + args
+        if args is None or args < 0:
+            args = 0
+        if len(queue) == 0:
+            return await ctx.send("** Queue is empty **")
+        for i in range(args * 10, args * 10 + 10):
+            if i < len(queue):
+                try:
+                    description += f"**{i + 1}.** [{queue[i].title} - {queue[i].author}]({queue[i].uri})\n"
+                except AttributeError:
+                    description += f"**{i + 1}.** {queue[i].title}\n"
 
-        while index < len(queue):
-            if index > 15 + adder:
-                break
-            try:
-                desctiption += f"__{index})__ [{queue[index].title}]({queue[index].uri}) \n"
-            except (IndexError, AttributeError):
-                desctiption += f"__{index})__ {queue[index].title}\n"
-            index += 1
+        next_button = nextcord.ui.Button(style=nextcord.ButtonStyle.green, label="Next page", custom_id="next")
+        prev_button = nextcord.ui.Button(style=nextcord.ButtonStyle.red, label="Previous page",
+                                         custom_id="previous")
 
-        if len(desctiption) == 0:
-            desctiption = "** Queue is empty **"
+        async def previous_callback(interaction: nextcord.Interaction):
+            await interaction.response.defer()
+            previous_page = args - 1
+            if previous_page < 0:
+                previous_page = 0
+            await self.queue_command(ctx, args=previous_page)
+
+        async def next_callback(interaction: nextcord.Interaction):
+            await interaction.response.defer()
+            await self.queue_command(ctx, args=args + 1)
+
+        prev_button.callback = previous_callback
+        next_button.callback = next_callback
+
+        buttons = [prev_button, next_button]
 
         em = nextcord.Embed(
             title="Reproductions list 🎸",
-            description=desctiption,
+            description=description,
             color=nextcord.Color.green()
         )
-        return await ctx.send(embed=em)
+
+        view = nextcord.ui.View()
+        for button in buttons:
+            view.add_item(button)
+
+        return await ctx.send(embed=em, view=view)
 
     @commands.command(name="skip", aliases=["s", "n", "next"])
     async def skip_command(self, ctx: Context, *, args: typing.Optional[int]):
@@ -315,12 +342,22 @@ def wrapper(*args):
 async def start_count(guild_id):
     while True:
         queue = srv.get(str(guild_id)).get('queue')
-        queue = [{
-            "title": song.title,
-            "cover": get_cover(song.uri),
-            "duration": song.duration,
-            'author': song.author,
-        } for song in queue]
+        output = [{}]
+        for song in queue:
+            try:
+                output.append({
+                    "title": song.title,
+                    "duration": song.duration,
+                    "url": song.uri,
+                    "cover": get_cover(url=song.uri),
+                })
+            except AttributeError:
+                output.append({
+                    "title": song.title,
+                    "duration": 0,
+                    "url": None,
+                    "cover": None
+                })
         socket.emit("songStart", {"guild_id": guild_id, "queue": queue}, room=guild_id)
 
         srv[str(guild_id)]['time'] = 0

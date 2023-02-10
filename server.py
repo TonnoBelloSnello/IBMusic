@@ -135,12 +135,22 @@ class SocketNamespace(Namespace):
                 srv[str(guild_id)]['pause'] = False
 
             queue = srv.get(guild_id).get('queue')
-            output = [{
-                "title": song.title,
-                "cover": get_cover(song.uri),
-                "duration": song.duration,
-                'author': song.author,
-            } for song in queue]
+            output = [{}]
+            for song in queue:
+                try:
+                    output.append({
+                        "title": song.title,
+                        "duration": song.duration,
+                        "url": song.uri,
+                        "cover": get_cover(url=song.uri),
+                    })
+                except AttributeError:
+                    output.append({
+                        "title": song.title,
+                        "duration": 0,
+                        "url": None,
+                        "cover": None
+                    })
             srv[guild_id]['skipping'] = False
             socket.emit('getQueue', {'queue': output}, room=int(guild_id))
 
@@ -159,12 +169,24 @@ class SocketNamespace(Namespace):
 
             queue.insert(0, first_element)
             srv.get(guild_id)['queue'] = queue
-            output = [{
-                "title": song.title,
-                "cover": get_cover(song.uri),
-                "duration": song.duration,
-                'author': song.author,
-            } for song in queue]
+            output = [{}]
+            for song in queue:
+                try:
+                    output.append({
+                        "title": song.title,
+                        "duration": song.duration,
+                        "url": song.uri,
+                        "cover": get_cover(url=song.uri),
+                    })
+                except AttributeError:
+                    output.append({
+                        "title": song.title,
+                        "duration": 0,
+                        "url": None,
+                        "cover": None
+                    })
             emit('shuffle', {'status': 'success', 'guild_id': guild_id}, room=int(guild_id))
             emit('getQueue', {'queue': output}, room=int(guild_id))
+
+
 socket.on_namespace(SocketNamespace(''))

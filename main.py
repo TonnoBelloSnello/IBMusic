@@ -1,9 +1,10 @@
 import os
-from threading import Thread
-from bot import start
-from server import app, socket
+
 from dotenv import load_dotenv
 from flask import render_template, redirect, url_for, session, request
+
+from bot import start
+from server import app, socket
 
 load_dotenv()
 
