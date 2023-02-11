@@ -327,23 +327,8 @@ def wrapper(*args):
 async def start_count(guild_id):
     while True:
         queue = srv.get(str(guild_id)).get('queue')
-        output = [{}]
-        for song in queue:
-            try:
-                output.append({
-                    "title": song.title,
-                    "duration": song.duration,
-                    "url": song.uri,
-                    "cover": get_cover(url=song.uri),
-                })
-            except AttributeError:
-                output.append({
-                    "title": song.title,
-                    "duration": 0,
-                    "url": None,
-                    "cover": None
-                })
-        socket.emit("songStart", {"guild_id": guild_id, "queue": queue}, room=guild_id)
+        output = prepare_queue(queue)
+        socket.emit("songStart", {"guild_id": guild_id, "queue": output}, room=guild_id)
 
         srv[str(guild_id)]['time'] = 0
         socket.emit('getTime', {'time': srv.get(str(guild_id)).get('time')}, room=guild_id)
