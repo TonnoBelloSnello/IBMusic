@@ -12,7 +12,7 @@ from nextcord.ext.commands import Context
 from wavelink import Node, Track
 from wavelink.ext import spotify
 
-from cogs.site.utils import get_cover, convert
+from cogs.site.utils import get_cover, convert, prepare_queue
 from server import socket
 from server import srv
 
@@ -125,23 +125,8 @@ class music(commands.Cog):
                 query += "".join(args)
                 tracks = await node.get_tracks(query=query, cls=wavelink.YouTubeTrack)
                 queue.append(tracks[0])
-            output = [{}]
-            for song in queue:
-                try:
-                    output.append({
-                        "title": song.title,
-                        "duration": song.duration,
-                        "url": song.uri,
-                        "cover": get_cover(url=song.uri),
-                    })
-                except AttributeError:
-                    output.append({
-                        "title": song.title,
-                        "duration": "0",
-                        "url": None,
-                        "cover": None
-                    })
 
+            output = prepare_queue(queue)
             if not ctx.voice_client.is_playing():
                 await send_message(ctx)
                 await player.play(queue[0])

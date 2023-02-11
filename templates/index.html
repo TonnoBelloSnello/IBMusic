@@ -320,7 +320,8 @@
         document.getElementById('songName').innerHTML = song.title;
         document.getElementById('author').innerHTML = song.author;
         document.getElementById('maxTime').innerHTML = convertTime(song.duration);
-        document.getElementById('cover').src = song.cover;
+	if(song.cover !== null) document.getElementById('cover').src = song.cover;
+	else document.getElementById('cover').src = "{{url_for('static', filename='empty.png')}}"
 
         document.getElementById('old-current-song').classList.add('hidden');
         document.getElementById('current-song').classList.remove('hidden');

@@ -6,7 +6,7 @@ from flask import Flask, session
 from flask_cors import CORS
 from flask_socketio import SocketIO, Namespace, emit, join_room
 
-from cogs.site.utils import check_user, get_cover
+from cogs.site.utils import check_user, get_cover, prepare_queue
 from flask_session import Session
 
 srv = {}
@@ -42,16 +42,11 @@ class SocketNamespace(Namespace):
             logged_users[data.get('user_code')] = guild_id
 
             queue = srv.get(guild_id).get('queue')
-            queue = [{
-                "title": song.title,
-                "cover": get_cover(song.uri),
-                "duration": song.duration,
-                'author': song.author,
-            } for song in queue]
+            output = prepare_queue(queue)
             emit('connectBot', {
                 'status': 'success',
                 'guild_id': guild_id,
-                'queue': queue
+                'queue': output
             }, room=data.get('user_code'))
 
     def on_getQueue(self, data):
@@ -63,13 +58,8 @@ class SocketNamespace(Namespace):
 
         if logged_users.get(data.get('user_code')) == guild_id:
             queue = srv.get(guild_id).get('queue')
-            queue = [{
-                "title": song.title,
-                "cover": get_cover(song.uri),
-                "duration": song.duration,
-                'author': song.author,
-            } for song in queue]
-            emit('getQueue', {'queue': queue}, room=int(guild_id))
+            output = prepare_queue(queue)
+            emit('getQueue', {'queue': output}, room=int(guild_id))
 
     def on_skip(self, data):
         if data.get('user_code') is None:
@@ -135,22 +125,7 @@ class SocketNamespace(Namespace):
                 srv[str(guild_id)]['pause'] = False
 
             queue = srv.get(guild_id).get('queue')
-            output = [{}]
-            for song in queue:
-                try:
-                    output.append({
-                        "title": song.title,
-                        "duration": song.duration,
-                        "url": song.uri,
-                        "cover": get_cover(url=song.uri),
-                    })
-                except AttributeError:
-                    output.append({
-                        "title": song.title,
-                        "duration": 0,
-                        "url": None,
-                        "cover": None
-                    })
+            output = prepare_queue(queue)
             srv[guild_id]['skipping'] = False
             socket.emit('getQueue', {'queue': output}, room=int(guild_id))
 
@@ -169,22 +144,7 @@ class SocketNamespace(Namespace):
 
             queue.insert(0, first_element)
             srv.get(guild_id)['queue'] = queue
-            output = [{}]
-            for song in queue:
-                try:
-                    output.append({
-                        "title": song.title,
-                        "duration": song.duration,
-                        "url": song.uri,
-                        "cover": get_cover(url=song.uri),
-                    })
-                except AttributeError:
-                    output.append({
-                        "title": song.title,
-                        "duration": 0,
-                        "url": None,
-                        "cover": None
-                    })
+            output = prepare_queue(queue)
             emit('shuffle', {'status': 'success', 'guild_id': guild_id}, room=int(guild_id))
             emit('getQueue', {'queue': output}, room=int(guild_id))
 

@@ -43,3 +43,25 @@ def convert(seconds: int) -> str:
     seconds %= 60
 
     return "%d:%02d:%02d" % (hour, minutes, seconds)
+
+
+def prepare_queue(queue: list) -> list:
+    output = []
+    for song in queue:
+        try:
+            output.append({
+                "title": song.title,
+                "duration": song.duration,
+                "url": song.uri,
+                "author": song.author,
+                "cover": get_cover(url=song.uri),
+            })
+        except AttributeError:
+            output.append({
+                "title": song.title,
+                "duration": 0,
+                "url": None,
+                "cover": None,
+                "author": "Unknown"
+            })
+    return output

@@ -14,7 +14,7 @@ from threading import Thread
 cogs = [music, ibm_site, node_listener]
 
 intents = nextcord.Intents().all()
-bot = commands.Bot(command_prefix="!", case_insensitive=True, intents=intents, enable_debug_events=True)
+bot = commands.Bot(command_prefix="&", case_insensitive=True, intents=intents, enable_debug_events=True)
 bot.remove_command("help")
 for cog in cogs:
     cog.setup(bot)

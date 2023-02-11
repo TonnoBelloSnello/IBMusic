@@ -48,4 +48,4 @@ def oauth_callback():
 
 if __name__ == '__main__':
     start()
-    socket.run(app, allow_unsafe_werkzeug=True)
+    socket.run(app, allow_unsafe_werkzeug=True, host='0.0.0.0', port='80')
