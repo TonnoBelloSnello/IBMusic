@@ -23,7 +23,10 @@ def setup(bot):
 
 async def send_message(ctx: Context):
     if srv[str(ctx.guild.id)].get("last_message") is not None:
-        await srv[str(ctx.guild.id)]["last_message"].delete()
+        try:
+            await srv[str(ctx.guild.id)]["last_message"].delete()
+        except: 
+            pass
 
     em = nextcord.Embed(
         title="New song 🎶",
