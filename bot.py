@@ -39,6 +39,19 @@ async def on_ready():
     await bot.change_presence(activity=activity)
     print(f'{bot.user} joined the game')
 
+@bot.event
+async def on_guild_join(guild):
+	srv[str(guild.id)] = {
+            "ctx": None,
+            'queue': [],
+            'player': None,
+            "last_message": None,
+            "loop": False,
+            'thread': None,
+            'time': 0,
+            'pause': False,
+            'skipping': False,
+        }
 
 def start():
     token = os.getenv("BOT_TOKEN")
@@ -49,3 +62,4 @@ def start():
 
 if __name__ == '__main__':
     start()
+

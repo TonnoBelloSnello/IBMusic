@@ -22,12 +22,6 @@ def setup(bot):
 
 
 async def send_message(ctx: Context):
-    if srv[str(ctx.guild.id)].get("last_message") is not None:
-        try:
-            await srv[str(ctx.guild.id)]["last_message"].delete()
-        except: 
-            pass
-
     em = nextcord.Embed(
         title="New song 🎶",
         description=f"**You are listening** \n{srv[str(ctx.guild.id)]['queue'][0].title}",
@@ -125,7 +119,7 @@ class music(commands.Cog):
                         return await ctx.send("**Not implemented yet**")
             else:
                 query = "ytsearch:"
-                query += "".join(args)
+                query += "+".join(args)
                 tracks = await node.get_tracks(query=query, cls=wavelink.YouTubeTrack)
                 queue.append(tracks[0])
 
@@ -290,7 +284,7 @@ class music(commands.Cog):
                         return await ctx.send("** Please put a valid song**")
             else:
                 query = "ytsearch:"
-                query += "".join(url)
+                query += "+".join(url)
                 tracks: list[wavelink.YouTubeMusicTrack] = await node.get_tracks(
                     cls=wavelink.YouTubeMusicTrack,
                     query=query
